@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Platform pemesanan makanan dan minuman KantinQue dengan pembayaran QRIS. Pesan makanan favorit Anda dengan mudah dan cepat.">
+    <meta name="keywords" content="kantin, pemesanan online, QRIS, makanan, minuman">
+    <title>KantinQue - Pesan Makanan & Minuman dengan QRIS</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                <i class="fas fa-utensils"></i>
+                <span>KantinQue</span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-cart" id="btnCart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content container">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Pesan Makanan <br>
+                    <span class="gradient-text">Lebih Mudah</span> & Cepat
+                </h1>
+                <p class="hero-description">
+                    Nikmati berbagai menu lezat dari KantinQue favorit Anda. Bayar dengan QRIS, praktis dan aman!
+                </p>
+                <button class="btn btn-primary"
+                    onclick="document.getElementById('menuUtama').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-rocket"></i>
+                    Mulai Pesan Sekarang
+                </button>
+            </div>
+            <div class="hero-image">
+                <div class="kantin-image-container">
+                    <img src="kantinn.jpg" alt="Kantin" class="kantin-photo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Unggulan -->
+    <section class="section" id="menuUnggulan">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Menu Unggulan
+                </h2>
+                <p class="section-subtitle">Pilihan favorit pelanggan kami</p>
+            </div>
+            <div class="menu-grid" id="menuUnggulanGrid">
+                <!-- Menu unggulan akan di-render oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Kategori Filter -->
+    <section class="section" id="menuUtama">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Menu Lengkap</h2>
+                <p class="section-subtitle">Jelajahi semua menu yang tersedia</p>
+            </div>
+
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari menu favorit Anda...">
+            </div>
+
+            <div class="category-filter">
+                <button class="filter-btn active" data-category="semua">
+                    <i class="fas fa-th"></i>
+                    Semua
+                </button>
+                <button class="filter-btn" data-category="Makanan">
+                    <i class="fas fa-hamburger"></i>
+                    Makanan
+                </button>
+                <button class="filter-btn" data-category="Minuman">
+                    <i class="fas fa-coffee"></i>
+                    Minuman
+                </button>
+                <button class="filter-btn" data-category="Snack">
+                    <i class="fas fa-cookie-bite"></i>
+                    Snack
+                </button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu akan di-render oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content cart-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h3>
+                <button class="btn-close" id="btnCloseCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cartItems">
+                    <!-- Cart items will be rendered here -->
+                </div>
+                <div class="cart-empty" id="cartEmpty">
+                    <i class="fas fa-shopping-basket"></i>
+                    <p>Keranjang masih kosong</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span class="total-price" id="totalPrice">Rp 0</span>
+                </div>
+                <button class="btn btn-primary btn-block" id="btnCheckout">
+                    <i class="fas fa-check-circle"></i>
+                    Checkout dengan QRIS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QRIS Payment Modal -->
+    <div class="modal" id="qrisModal">
+        <div class="modal-overlay" id="qrisOverlay"></div>
+        <div class="modal-content qris-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-qrcode"></i> Pembayaran QRIS</h3>
+                <button class="btn-close" id="btnCloseQris">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="qris-info">
+                    <div class="order-summary" id="orderSummary">
+                        <!-- Order summary will be rendered here -->
+                    </div>
+
+                    <div class="qris-container">
+                        <div class="qris-code">
+                            <div class="qr-placeholder" id="qrPlaceholder">
+                                <i class="fas fa-qrcode"></i>
+                                <p>Scan QR Code untuk bayar</p>
+                            </div>
+                            <div id="qrcode"></div>
+                        </div>
+
+                        <div class="payment-instructions">
+                            <h4><i class="fas fa-info-circle"></i> Cara Pembayaran:</h4>
+                            <ol>
+                                <li>Buka aplikasi mobile banking atau e-wallet Anda</li>
+                                <li>Pilih menu Scan QRIS</li>
+                                <li>Arahkan kamera ke QR code di atas</li>
+                                <li>Konfirmasi pembayaran</li>
+                                <li>Tunggu notifikasi pembayaran berhasil</li>
+                            </ol>
+                        </div>
+
+                        <div class="payment-timer">
+                            <i class="fas fa-clock"></i>
+                            <span>Selesaikan pembayaran dalam: <strong id="countdown">05:00</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="payment-status" id="paymentStatus">
+                        <div class="status-pending">
+                            <div class="spinner"></div>
+                            <p>Menunggu pembayaran...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>KantinQue</span>
+                </div>
+                <p class="footer-text">Platform pemesanan makanan & minuman dengan pembayaran QRIS</p>
+                <div class="footer-payment">
+                    <span>Metode Pembayaran:</span>
+                    <div class="payment-methods">
+                        <i class="fas fa-qrcode"></i>
+                        <span>QRIS</span>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <span>Hubungi Kami:</span>
+                    <a href="https://wa.me/6289681093158" target="_blank" class="whatsapp-contact">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+62 896-8109-3158</span>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KantinQue. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="qr-code-fix.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
